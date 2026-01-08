@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Biên bản xác nhận</title>
+  <script src="jquery-3.7.1.js"></script>
+  <link href="bootstrap-5.3.8-dist\css\bootstrap.min.css" rel="stylesheet"/>
+  <script src="html-docx.js"></script>
+
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      background: #ffffff;
+    }
+    /* .container {
+      width: 100%;
+      margin: 20px auto;
+      background: #fff;
+      padding: 30px 40px;
+      border: 1px solid #ccc;
+    } */
+    h1 {
+        font-weight: bold;
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+    .code {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    .row {
+      margin: 8px 0;
+    }
+    label {
+      display: inline-block;
+      width: 120px;
+      font-weight: bold;
+    }
+    input[type="text"] {
+      width: 250px;
+      border: none;
+      border-bottom: 1px dotted #000;
+      outline: none;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    table, th, td {
+      border: 1px solid #000;
+    }
+    th, td {
+      padding: 6px;
+      text-align: center;
+    }
+    .section-title {
+      font-style: italic;
+      margin-top: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 100%;
+      border: none ;
+      resize:none;
+    }
+    .sign {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      text-align: center;
+    }
+    .sign div {
+      width: 22%;
+    }        
+    .logo {
+            float: right;
+       }
+        
+    .logo img {
+            height: 60px;
+        }
+    .signature-box {
+        width: 100%;
+        height: 80%;
+        border: 2px dashed #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        }
+
+    .signature-box img {
+    max-width: 100%;
+    max-height: 100%;
+    }
+        @media print {
+  input, textarea {
+    border: none !important;
+    outline: none;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container" id="exportContent">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-2"><img src="logo VAS port-01.png" alt="Logo" height="100%" width="100%"></div>
+          
+    </div>
+    <h1 style="text-align: left;">BIÊN BẢN XÁC NHẬN</h1>
+    <div class="code">Số: <input type="text" style="width:30px"/>/BM.26/NSIP-KYT</div>
+
+    <div class="row">Hôm nay, ngày <input type="text" style="width:40px"/> tháng <input type="text" style="width:40px"/> năm <input type="text" style="width:60px"/></div>
+
+    <div class="row">Chúng tôi gồm:</div>
+    <div class="row">
+        <div class="col-6">
+            <ol type="1">
+                <li>Ông/Bà: <input type="text"/> </li>
+                <li>Ông/Bà: <input type="text"/> </li>
+                <li>Ông/Bà: <input type="text"/> </li>
+                <li>Ông/Bà: <input type="text"/> </li>
+            </ol>
+        </div>
+        <div class="col-6">
+            <ul>
+                <li>Chức vụ: <input type="text"/></li>
+                <li>Chức vụ: <input type="text"/></li>
+                <li>Chức vụ: <input type="text"/></li>
+                <li>Chức vụ: <input type="text"/></li>
+            </ul>
+        </div>
+    </div>
+    <div class="code">Chúng tôi sẽ sử dụng phương tiện: <input type="text" style="width:200px"/> để thực hiện tịnh cân, kiểm tra <input type="text" style="width:10px"/> điểm trên 1 bàn cân cho <input type="text" style="width:10px"/> bàn cân của Cảng, kết quả được ghi nhận như sau:</div>
+    <div class="row">
+        <div class="col-6" style="font-style:italic; text-align: left;">Bảng 1:</div>
+        <div class="col-6" style="font-style:italic; text-align: right;">(Đơn vị: Kg)</div>
+    </div>
+    <table>
+      <tr>
+        <th>Điểm cân</th>
+        <th>Bàn cân 01</th>
+        <th>Bàn cân 02</th>
+        <th>Bàn cân 03</th>
+        <th>Bàn cân 04</th>
+        <th>Bàn cân 05</th>
+        <th>Bàn cân 06</th>
+      </tr>
+      <tr>
+        <td>Điểm 1</td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td>
+      </tr>
+      <tr>
+        <td>Điểm 2</td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td>
+      </tr>
+      <tr>
+        <td>Điểm 3</td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td>
+      </tr>
+      <tr>
+        <td>Điểm 4</td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td>
+      </tr>
+      <tr>
+        <td>Điểm 5</td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td>
+      </tr>
+      <tr>
+        <td>Điểm 6</td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td>
+      </tr>
+    </table>
+    <div class="code">Và sử dụng phương tiện <input type="text" style="width:200px"/> để thực hiện tịnh cân tổng thể <input type="text" style="width:10px"/> bàn cân, kết quả ghi nhận như sau:</div>
+    <div class="row">
+        <div class="col-6" style="font-style:italic; text-align: left;">Bảng 2:</div>
+        <div class="col-6" style="font-style:italic; text-align: right;">(Đơn vị: Kg)</div>
+    </div>
+    <table>
+      <tr>
+        <th>Bàn cân 01</th>
+        <th>Bàn cân 02</th>
+        <th>Bàn cân 03</th>
+        <th>Bàn cân 04</th>
+        <th>Bàn cân 05</th>
+        <th>Bàn cân 06</th>
+      </tr>
+      <tr height="40px">
+        <td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td><td><textarea class="textarea"></textarea></td>
+      </tr>
+    </table>
+
+    <div class="row">Kết luận:</div>
+    <textarea style="border:1px solid; display:flex"></textarea>
+    <div class="row">Phương án xử lý:</div>
+    <textarea style="border:1px solid; display:flex"></textarea>
+    <div class="section-title">Biên bản được lập ngày <input type="text" style="width:20px"/>/<input type="text" style="width:20px"/>/<input type="text" style="width:40px"/></div>
+    <div class="row">Xác nhận:</div>
+    <div class ="row">
+            <div class="col-3" style="text-align: center; height:150px;">
+                <b>BP.IT</b>
+                <div class="signature-box" id="signatureBox1">
+                    <span id="signatureText1"></span>
+                    <img id="signaturePreview1" style="display:none;">
+                </div>
+                <input type="file" id="signatureInput1" accept="image/*" hidden>
+                <script>
+                    $("#signatureBox1").click(function () {
+                        $("#signatureInput1").click();
+                    });
+
+                    $("#signatureInput1").on("change", function (e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                        $("#signaturePreview1").attr("src", e.target.result).show();
+                        $("#signatureText1").hide();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                </script>
+            </div>
+            <div class="col-3" style="text-align: center;height:150px;">
+                <b>Xưởng cơ điện</b>
+                <div class="signature-box" id="signatureBox2">
+                    <span id="signatureText2"></span>
+                    <img id="signaturePreview2" style="display:none;">
+                </div>
+                <input type="file" id="signatureInput2" accept="image/*" hidden>
+                <script>
+                    $("#signatureBox2").click(function () {
+                        $("#signatureInput2").click();
+                    });
+
+                    $("#signatureInput2").on("change", function (e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                        $("#signaturePreview2").attr("src", e.target.result).show();
+                        $("#signatureText2").hide();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                </script>
+            </div>
+            <div class="col-3" style="text-align: center;height:150px;">
+                <b>Tổ bàn cân</b>
+                <div class="signature-box" id="signatureBox3">
+                    <span id="signatureText3"></span>
+                    <img id="signaturePreview3" style="display:none;">
+                </div>
+                <input type="file" id="signatureInput3" accept="image/*" hidden>
+                <script>
+                    $("#signatureBox3").click(function () {
+                        $("#signatureInput3").click();
+                    });
+
+                    $("#signatureInput3").on("change", function (e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                        $("#signaturePreview3").attr("src", e.target.result).show();
+                        $("#signatureText3").hide();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                </script>
+            </div>
+            <div class="col-3" style="text-align: center;height:150px;">
+                <b>P.Kỹ thuật</b>
+                <div class="signature-box" id="signatureBox4">
+                    <span id="signatureText4"></span>
+                    <img id="signaturePreview4" style="display:none;">
+                </div>
+                <input type="file" id="signatureInput4" accept="image/*" hidden>
+                <script>
+                    $("#signatureBox4").click(function () {
+                        $("#signatureInput4").click();
+                    });
+
+                    $("#signatureInput4").on("change", function (e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                        $("#signaturePreview4").attr("src", e.target.result).show();
+                        $("#signatureText4").hide();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                </script>
+            </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-6" style="text-align: left;font-size: 13px;">
+            <p><b>CẢNG QUỐC TẾ NGHI SƠN</b></p>
+            <p><b>Địa chỉ:</b>TDP Hà Tân, Phường Nghi Sơn, tỉnh Thanh Hóa</p>
+        </div>
+        <div class="col-6" style="text-align: left;font-size: 13px;">
+            <p><b>W</b> <a href="https://vasgroup.vn/">www.vasgroup.vn</a></p>
+            <p><b>T  + 84 2373 613 938  F  + 84 2373 613 938</b> </p>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

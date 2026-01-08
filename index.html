@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Biên bản xác nhận</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- FileSaver + HTML to Word -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      background: #f5f5f5;
+    }
+    .paper {
+      background: white;
+      padding: 30px;
+      width: 900px;
+      margin: auto;
+    }
+    table input {
+      width: 100%;
+      border: none;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="paper" id="exportContent">
+
+  <h4 class="text-center fw-bold">BIÊN BẢN XÁC NHẬN</h4>
+
+  <p>
+    Hôm nay, ngày
+    <input type="number" style="width:60px"> /
+    <input type="number" style="width:60px"> /
+    <input type="number" style="width:80px">
+  </p>
+
+  <p><b>Chúng tôi gồm:</b></p>
+
+  <div class="row mb-2">
+    <div class="col-6">1. Ông/Bà: <input class="form-control d-inline w-75"></div>
+    <div class="col-6">Chức vụ: <input class="form-control d-inline w-75"></div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-6">2. Ông/Bà: <input class="form-control d-inline w-75"></div>
+    <div class="col-6">Chức vụ: <input class="form-control d-inline w-75"></div>
+  </div>
+
+  <p><b>Bảng 1: Kiểm tra 4 điểm trên các bàn cân</b></p>
+
+  <button class="btn btn-sm btn-primary mb-2" id="addColumn">➕ Thêm bàn cân</button>
+  <button class="btn btn-sm btn-secondary mb-2" id="addRow">➕ Thêm điểm cân</button>
+
+  <table class="table table-bordered text-center" id="table1">
+    <thead>
+      <tr>
+        <th>Điểm cân</th>
+        <th>Bàn cân 01</th>
+        <th>Bàn cân 02</th>
+        <th>Bàn cân 03</th>
+        <th>Bàn cân 04</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Điểm 1</td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+      </tr>
+      <tr>
+        <td>Điểm 2</td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+      </tr>
+      <tr>
+        <td>Điểm 3</td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+      </tr>
+      <tr>
+        <td>Điểm 4</td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><b>Kết luận:</b></p>
+  <textarea rows="4"></textarea>
+
+  <p><b>Phương án xử lý:</b></p>
+  <textarea rows="4"></textarea>
+
+</div>
+
+<div class="text-center my-4">
+  <button class="btn btn-success" id="exportWord">📄 Xuất file Word</button>
+</div>
+
+<script>
+  // Thêm cột
+  $("#addColumn").click(function () {
+    let colCount = $("#table1 thead th").length;
+    $("#table1 thead tr").append(`<th>Bàn cân ${colCount}</th>`);
+    $("#table1 tbody tr").each(function () {
+      $(this).append(`<td><input></td>`);
+    });
+  });
+
+  // Thêm dòng
+  $("#addRow").click(function () {
+    let rowCount = $("#table1 tbody tr").length + 1;
+    let colCount = $("#table1 thead th").length;
+    let row = `<tr><td>Điểm ${rowCount}</td>`;
+    for (let i = 1; i < colCount; i++) {
+      row += `<td><input></td>`;
+    }
+    row += `</tr>`;
+    $("#table1 tbody").append(row);
+  });
+
+  // Xuất Word
+  $("#exportWord").click(function () {
+    let content = document.getElementById("exportContent").innerHTML;
+    let blob = new Blob(
+      ['<html><head><meta charset="utf-8"></head><body>' + content + '</body></html>'],
+      { type: "application/msword;charset=utf-8" }
+    );
+    saveAs(blob, "BienBanXacNhan.doc");
+  });
+</script>
+
+</body>
+</html>

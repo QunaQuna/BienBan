@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Biên bản xác nhận</title>
+  <script src="jquery-3.7.1.js"></script>
+  <link href="bootstrap-5.3.8-dist\css\bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .container {
+      width: 900px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 30px 40px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 22px;
+    }
+    .code {
+      text-align: left;
+    }
+    .row {
+      margin: 8px 0;
+    }
+    input[type="text"] {
+      width: 250px;
+      border: none;
+      border-bottom: 1px dotted #000;
+      outline: none;
+      background: transparent;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    table, th, td {
+      border: 1px solid #000;
+    }
+    th, td {
+      padding: 6px;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 70px;
+      border: 1px solid #000;
+      resize: vertical;
+    }
+    .logo {
+      float: right;
+    }
+    
+    /* Nút xuất Word */
+    .export-btn-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .btn-export {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .table-textarea {
+      width: 100%;
+      height: 100%;
+      border: none !important;
+      background: transparent;
+      resize: none;
+      font-family: "Times New Roman", serif;
+      font-size: 14px;
+      text-align: center;
+      padding: 5px;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 10px 0;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+    
+    .footer-info {
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+      margin-top: 20px;
+    }
+    
+    #previewImage {
+      max-height: 80px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="export-btn-container">
+    <button class="btn-export" onclick="exportToWord()">
+      📄 Xuất sang Word
+    </button>
+    <div class="loading" id="loadingIndicator">Đang xuất file...</div>
+  </div>
+
+  <div class="container" id="exportContent">
+    
+    <!-- Logo section -->
+    <div class="row">
+      <div style="float: right;">
+        <!-- Hình ảnh từ web -->
+        <img id="logoImage" src="IMG_2143.JPG" alt="Logo" style="max-height: 80px; width: auto;">
+        <!-- Nếu không có ảnh, hiển thị placeholder -->
+        <div id="logoPlaceholder" style="display:none; width: 150px; height: 60px; border: 1px solid #ccc; text-align: center; line-height: 60px;">
+          [LOGO]
+        </div>
+      </div>
+      
+      <h1>BIÊN BẢN XÁC NHẬN</h1>
+      <div class="code">Số: <input type="text" id="soBB" style="width:50px" value=""/> /BM.26/NSIP-KYT</div>
+      <div class="row">Hôm nay, ngày <input type="text" id="ngay" style="width:40px" value=""/> tháng <input type="text" id="thang" style="width:40px" value=""/> năm <input type="text" id="nam" style="width:60px" value=""/></div>
+    </div>
+
+    <div class="row">Chúng tôi gồm:</div>
+    <div class="row">
+      <div class="col-6">
+        <ol type="1">
+          <li>Ông/Bà: <input type="text" id="ten1" value=""/></li>
+          <li>Ông/Bà: <input type="text" id="ten2" value=""/></li>
+          <li>Ông/Bà: <input type="text" id="ten3" value=""/></li>
+          <li>Ông/Bà: <input type="text" id="ten4" value=""/></li>
+        </ol>
+      </div>
+      <div class="col-6">
+        <ul style="list-style-type: none; padding-left: 0;">
+          <li>Chức vụ: <input type="text" id="chucvu1" value=""/></li>
+          <li>Chức vụ: <input type="text" id="chucvu2" value=""/></li>
+          <li>Chức vụ: <input type="text" id="chucvu3" value=""/></li>
+          <li>Chức vụ: <input type="text" id="chucvu4" value=""/></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="code">
+      Chúng tôi sẽ sử dụng phương tiện: 
+      <input type="text" id="phuongTien1" style="width:200px" value=""/> 
+      để thực hiện tịnh cân, kiểm tra 
+      <input type="text" id="soDiem" style="width:30px" value=""/> 
+      điểm trên 1 bàn cân cho 
+      <input type="text" id="soBanCan" style="width:30px" value=""/> 
+      bàn cân của Cảng, kết quả được ghi nhận như sau:
+    </div>
+    
+    <div class="row">
+      <div class="col-6" style="font-style:italic; text-align: left;">Bảng 1:</div>
+      <div class="col-6" style="font-style:italic; text-align: right;">(Đơn vị: Kg)</div>
+    </div>
+    
+    <table id="bang1">
+      <tr>
+        <th>Điểm cân</th>
+        <th>Bàn cân 01</th>
+        <th>Bàn cân 02</th>
+        <th>Bàn cân 03</th>
+        <th>Bàn cân 04</th>
+        <th>Bàn cân 05</th>
+        <th>Bàn cân 06</th>
+      </tr>
+      <!-- Tạo 6 hàng cho bảng 1 -->
+      <script>
+        for(let i = 1; i <= 6; i++) {
+          document.write(`
+            <tr>
+              <td>Điểm ${i}</td>
+              <td><textarea class="table-textarea" id="b1_d${i}_c1"></textarea></td>
+              <td><textarea class="table-textarea" id="b1_d${i}_c2"></textarea></td>
+              <td><textarea class="table-textarea" id="b1_d${i}_c3"></textarea></td>
+              <td><textarea class="table-textarea" id="b1_d${i}_c4"></textarea></td>
+              <td><textarea class="table-textarea" id="b1_d${i}_c5"></textarea></td>
+              <td><textarea class="table-textarea" id="b1_d${i}_c6"></textarea></td>
+            </tr>
+          `);
+        }
+      </script>
+    </table>
+    
+    <div class="code">
+      Và sử dụng phương tiện 
+      <input type="text" id="phuongTien2" style="width:200px" value=""/> 
+      để thực hiện tịnh cân tổng thể 
+      <input type="text" id="soBanCan2" style="width:30px" value=""/> 
+      bàn cân, kết quả ghi nhận như sau:
+    </div>
+    
+    <div class="row">
+      <div class="col-6" style="font-style:italic; text-align: left;">Bảng 2:</div>
+      <div class="col-6" style="font-style:italic; text-align: right;">(Đơn vị: Kg)</div>
+    </div>
+    
+    <table id="bang2">
+      <tr>
+        <th>Bàn cân 01</th>
+        <th>Bàn cân 02</th>
+        <th>Bàn cân 03</th>
+        <th>Bàn cân 04</th>
+        <th>Bàn cân 05</th>
+        <th>Bàn cân 06</th>
+      </tr>
+      <tr>
+        <td><textarea class="table-textarea" id="b2_c1"></textarea></td>
+        <td><textarea class="table-textarea" id="b2_c2"></textarea></td>
+        <td><textarea class="table-textarea" id="b2_c3"></textarea></td>
+        <td><textarea class="table-textarea" id="b2_c4"></textarea></td>
+        <td><textarea class="table-textarea" id="b2_c5"></textarea></td>
+        <td><textarea class="table-textarea" id="b2_c6"></textarea></td>
+      </tr>
+    </table>
+
+    <div class="row"><b>Kết luận:</b></div>
+    <textarea id="ketLuan" rows="3"></textarea>
+    
+    <div class="row"><b>Phương án xử lý:</b></div>
+    <textarea id="phuongAn" rows="3"></textarea>
+    
+    <div class="row"><b>Xác nhận:</b></div>
+    <div class="row">
+      <div class="col-3" style="text-align: center; height:100px;"><b>BP.IT</b></div>
+      <div class="col-3" style="text-align: center;height:100px;"><b>Xưởng cơ điện</b></div>
+      <div class="col-3" style="text-align: center;height:100px;"><b>Tổ bàn cân</b></div>
+      <div class="col-3" style="text-align: center;height:100px;"><b>P.Kỹ thuật</b></div>
+    </div>
+    
+    <div class="footer-info">
+      <div class="row">
+        <div class="col-6" style="text-align: left;font-size: 13px;">
+          <p><b>CẢNG QUỐC TẾ NGHI SƠN</b></p>
+          <p><b>Địa chỉ:</b> TDP Hà Tân, Phường Nghi Sơn, tỉnh Thanh Hóa</p>
+        </div>
+        <div class="col-6" style="text-align: left;font-size: 13px;">
+          <p><b>W</b> <a href="https://vasgroup.vn/">www.vasgroup.vn</a></p>
+          <p><b>T  + 84 2373 613 938  F  + 84 2373 613 938</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Hàm chuyển đổi hình ảnh sang base64
+    function getImageBase64(imageElement) {
+      return new Promise((resolve, reject) => {
+        // Kiểm tra xem ảnh có tồn tại không
+        if (!imageElement || !imageElement.src) {
+          resolve(null);
+          return;
+        }
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        // Xử lý CORS nếu ảnh từ domain khác
+        img.crossOrigin = 'anonymous';
+        
+        img.onload = function() {
+          try {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            
+            // Chuyển đổi sang base64
+            const base64String = canvas.toDataURL('image/png');
+            resolve(base64String);
+          } catch (error) {
+            console.error('Lỗi khi chuyển đổi ảnh:', error);
+            resolve(null);
+          }
+        };
+        
+        img.onerror = function() {
+          console.warn('Không thể tải ảnh, sử dụng placeholder');
+          resolve(null);
+        };
+        
+        img.src = imageElement.src;
+        
+        // Nếu ảnh đã được tải trước đó
+        if (imageElement.complete) {
+          img.src = imageElement.src;
+        }
+      });
+    }
+
+    async function exportToWord() {
+      // Hiển thị loading
+      document.getElementById('loadingIndicator').style.display = 'block';
+      
+      try {
+        // Lấy hình ảnh và chuyển đổi sang base64
+        const logoImage = document.getElementById('logoImage');
+        let logoBase64 = null;
+        
+        // Thử chuyển đổi ảnh sang base64
+        if (logoImage && logoImage.src) {
+          logoBase64 = await getImageBase64(logoImage);
+        }
+        
+        // Thu thập dữ liệu từ form
+        const data = {
+          soBB: document.getElementById('soBB').value || '',
+          ngay: document.getElementById('ngay').value || '',
+          thang: document.getElementById('thang').value || '',
+          nam: document.getElementById('nam').value || '',
+          ten1: document.getElementById('ten1').value || '',
+          ten2: document.getElementById('ten2').value || '',
+          ten3: document.getElementById('ten3').value || '',
+          ten4: document.getElementById('ten4').value || '',
+          chucvu1: document.getElementById('chucvu1').value || '',
+          chucvu2: document.getElementById('chucvu2').value || '',
+          chucvu3: document.getElementById('chucvu3').value || '',
+          chucvu4: document.getElementById('chucvu4').value || '',
+          phuongTien1: document.getElementById('phuongTien1').value || '',
+          soDiem: document.getElementById('soDiem').value || '',
+          soBanCan: document.getElementById('soBanCan').value || '',
+          phuongTien2: document.getElementById('phuongTien2').value || '',
+          soBanCan2: document.getElementById('soBanCan2').value || '',
+          ketLuan: document.getElementById('ketLuan').value || '',
+          phuongAn: document.getElementById('phuongAn').value || ''
+        };
+        
+        // Tạo nội dung HTML cho Word với hình ảnh
+        const wordContent = `
+          <html xmlns:v="urn:schemas-microsoft-com:vml"
+                xmlns:o="urn:schemas-microsoft-com:office:office"
+                xmlns:w="urn:schemas-microsoft-com:office:word"
+                xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+                xmlns="http://www.w3.org/TR/REC-html40">
+          <head>
+              <meta charset="UTF-8">
+              <title>Biên bản xác nhận</title>
+              <xml>
+                  <w:WordDocument>
+                      <w:View>Print</w:View>
+                      <w:Zoom>100</w:Zoom>
+                      <w:DoNotOptimizeForBrowser/>
+                  </w:WordDocument>
+              </xml>
+              <style>
+                  body {
+                      font-family: "Times New Roman", serif;
+                      font-size: 13pt;
+                      line-height: 1.5;
+                      margin: 40pt;
+                  }
+                  h1 {
+                      text-align: left;
+                      font-size: 18pt;
+                      margin-bottom: 10pt;
+                  }
+                  table {
+                      width: 100%;
+                      border-collapse: collapse;
+                      margin: 15pt 0;
+                  }
+                  table, th, td {
+                      border: 1px solid black;
+                  }
+                  th, td {
+                      padding: 6pt;
+                      text-align: center;
+                      vertical-align: middle;
+                  }
+                  .logo-container {
+                      float: right;
+                      margin-bottom: 20pt;
+                  }
+                  .logo-container img {
+                      max-height: 80pt;
+                      width: auto;
+                  }
+                  .signature-area {
+                      margin-top: 40pt;
+                  }
+                  .signature-box {
+                      height: 80pt;
+                      border-bottom: 1px solid #000;
+                      text-align: center;
+                      margin-bottom: 5pt;
+                  }
+                  .footer-info {
+                      border-top: 1px solid #ccc;
+                      padding-top: 15pt;
+                      margin-top: 30pt;
+                      font-size: 10pt;
+                  }
+                  .data-field {
+                      border-bottom: 1px dotted #000;
+                      min-width: 100pt;
+                      display: inline-block;
+                      padding: 0 5pt;
+                  }
+                  .content-box {
+                      border: 1px solid #000;
+                      padding: 10pt;
+                      min-height: 50pt;
+                      margin-bottom: 15pt;
+                  }
+              </style>
+          </head>
+          <body>
+              <!-- Logo -->
+              <div class="logo-container">
+                  ${logoBase64 ? `<img src="${logoBase64}" alt="Logo" style="max-height: 80pt;">` : '<div style="width: 150pt; height: 60pt; border: 1px solid #ccc; text-align: center; line-height: 60pt;">LOGO</div>'}
+              </div>
+              
+              <h1>BIÊN BẢN XÁC NHẬN</h1>
+              
+              <div>Số: <span class="data-field">${data.soBB}</span>/BM.26/NSIP-KYT</div>
+              
+              <div>Hôm nay, ngày <span class="data-field">${data.ngay}</span> tháng <span class="data-field">${data.thang}</span> năm <span class="data-field">${data.nam}</span></div>
+              
+              <div style="margin-top: 15pt;">Chúng tôi gồm:</div>
+              <div style="margin-bottom: 15pt;">
+                  <table style="width: 100%; border: none;">
+                      <tr>
+                          <td style="width: 50%; vertical-align: top; border: none;">
+                              <ol type="1">
+                                  <li>Ông/Bà: <span class="data-field">${data.ten1}</span></li>
+                                  <li>Ông/Bà: <span class="data-field">${data.ten2}</span></li>
+                                  <li>Ông/Bà: <span class="data-field">${data.ten3}</span></li>
+                                  <li>Ông/Bà: <span class="data-field">${data.ten4}</span></li>
+                              </ol>
+                          </td>
+                          <td style="width: 50%; vertical-align: top; border: none;">
+                              <ul style="list-style-type: none; padding-left: 0;">
+                                  <li>Chức vụ: <span class="data-field">${data.chucvu1}</span></li>
+                                  <li>Chức vụ: <span class="data-field">${data.chucvu2}</span></li>
+                                  <li>Chức vụ: <span class="data-field">${data.chucvu3}</span></li>
+                                  <li>Chức vụ: <span class="data-field">${data.chucvu4}</span></li>
+                              </ul>
+                          </td>
+                      </tr>
+                  </table>
+              </div>
+              
+              <div>Chúng tôi sẽ sử dụng phương tiện: <span class="data-field">${data.phuongTien1}</span> để thực hiện tịnh cân, kiểm tra <span class="data-field">${data.soDiem}</span> điểm trên 1 bàn cân cho <span class="data-field">${data.soBanCan}</span> bàn cân của Cảng, kết quả được ghi nhận như sau:</div>
+              
+              <div style="margin-top: 10pt;">
+                  <table style="width: 100%; border: none;">
+                      <tr>
+                          <td style="width: 50%; text-align: left; font-style: italic; border: none;">Bảng 1:</td>
+                          <td style="width: 50%; text-align: right; font-style: italic; border: none;">(Đơn vị: Kg)</td>
+                      </tr>
+                  </table>
+              </div>
+              
+              ${generateTableHTML('bang1')}
+              
+              <div>Và sử dụng phương tiện <span class="data-field">${data.phuongTien2}</span> để thực hiện tịnh cân tổng thể <span class="data-field">${data.soBanCan2}</span> bàn cân, kết quả ghi nhận như sau:</div>
+              
+              <div style="margin-top: 10pt;">
+                  <table style="width: 100%; border: none;">
+                      <tr>
+                          <td style="width: 50%; text-align: left; font-style: italic; border: none;">Bảng 2:</td>
+                          <td style="width: 50%; text-align: right; font-style: italic; border: none;">(Đơn vị: Kg)</td>
+                      </tr>
+                  </table>
+              </div>
+              
+              ${generateTableHTML('bang2')}
+              
+              <div style="margin-top: 15pt;"><b>Kết luận:</b></div>
+              <div class="content-box">${data.ketLuan || ''}</div>
+              
+              <div style="margin-top: 15pt;"><b>Phương án xử lý:</b></div>
+              <div class="content-box">${data.phuongAn || ''}</div>
+              
+              <div style="margin-top: 15pt;"><b>Xác nhận:</b></div>
+              <div class="signature-area">
+                  <table style="width: 100%; border: none;">
+                      <tr>
+                          <td style="width: 25%; text-align: center; border: none;">
+                              <div class="signature-box"></div>
+                              <b>BP.IT</b>
+                          </td>
+                          <td style="width: 25%; text-align: center; border: none;">
+                              <div class="signature-box"></div>
+                              <b>Xưởng cơ điện</b>
+                          </td>
+                          <td style="width: 25%; text-align: center; border: none;">
+                              <div class="signature-box"></div>
+                              <b>Tổ bàn cân</b>
+                          </td>
+                          <td style="width: 25%; text-align: center; border: none;">
+                              <div class="signature-box"></div>
+                              <b>P.Kỹ thuật</b>
+                          </td>
+                      </tr>
+                  </table>
+              </div>
+              
+              <div class="footer-info">
+                  <table style="width: 100%; border: none;">
+                      <tr>
+                          <td style="width: 50%; vertical-align: top; border: none;">
+                              <p><b>CẢNG QUỐC TẾ NGHI SƠN</b></p>
+                              <p><b>Địa chỉ:</b> TDP Hà Tân, Phường Nghi Sơn, tỉnh Thanh Hóa</p>
+                          </td>
+                          <td style="width: 50%; vertical-align: top; border: none;">
+                              <p><b>W</b> www.vasgroup.vn</p>
+                              <p><b>T  + 84 2373 613 938  F  + 84 2373 613 938</b></p>
+                          </td>
+                      </tr>
+                  </table>
+              </div>
+          </body>
+          </html>
+        `;
+        
+        // Tạo Blob và tải xuống
+        const blob = new Blob(['\ufeff', wordContent], {
+          type: 'application/msword'
+        });
+        
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        
+        // Tạo tên file với ngày tháng
+        const fileName = `Bien_ban_xac_nhan_${data.ngay}_${data.thang}_${data.nam}.doc`;
+        a.download = fileName;
+        
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert('Đã xuất file Word thành công!');
+        
+      } catch (error) {
+        console.error('Lỗi khi xuất file:', error);
+        alert('Có lỗi xảy ra khi xuất file. Vui lòng thử lại.');
+      } finally {
+        // Ẩn loading
+        document.getElementById('loadingIndicator').style.display = 'none';
+      }
+    }
+    
+    // Hàm tạo HTML cho bảng
+    function generateTableHTML(tableId) {
+      const table = document.getElementById(tableId);
+      if (!table) return '';
+      
+      const tempTable = table.cloneNode(true);
+      
+      // Thay thế textarea bằng nội dung
+      const textareas = tempTable.querySelectorAll('textarea');
+      textareas.forEach(textarea => {
+        const value = textarea.value || '';
+        const div = document.createElement('div');
+        div.textContent = value;
+        div.style.minHeight = '40pt';
+        div.style.padding = '3pt';
+        textarea.parentNode.replaceChild(div, textarea);
+      });
+      
+      return tempTable.outerHTML;
+    }
+    
+    // Tự động điền ngày tháng
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date();
+      const ngayInput = document.getElementById('ngay');
+      const thangInput = document.getElementById('thang');
+      const namInput = document.getElementById('nam');
+      
+      if (!ngayInput.value) ngayInput.value = today.getDate();
+      if (!thangInput.value) thangInput.value = today.getMonth() + 1;
+      if (!namInput.value) namInput.value = today.getFullYear();
+      
+      // Kiểm tra ảnh có load được không
+      const logoImage = document.getElementById('logoImage');
+      const logoPlaceholder = document.getElementById('logoPlaceholder');
+      
+      logoImage.onerror = function() {
+        logoImage.style.display = 'none';
+        logoPlaceholder.style.display = 'block';
+      };
+      
+      logoImage.onload = function() {
+        logoPlaceholder.style.display = 'none';
+      };
+      
+      // Thêm sự kiện Enter để chuyển focus
+      const inputs = document.querySelectorAll('input[type="text"]');
+      inputs.forEach((input, index) => {
+        input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            if (index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
